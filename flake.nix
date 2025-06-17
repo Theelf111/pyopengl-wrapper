@@ -9,7 +9,7 @@
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
-        (python3WithPackages (py-pkgs:
+        (pkgs.python3.withPackages (py-pkgs:
           with py-pkgs; [
             pyopengl
             pygame
@@ -18,7 +18,7 @@
     };
     packages.${system}.default = with pkgs.python3Packages;
       buildPythonPackage {
-        pname = "pyopengl-wrapper";
+        pname = "pyopenglWrapper";
         version = "0.1";
         src = ./.;
         propagatedBuildInputs = [
