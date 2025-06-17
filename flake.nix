@@ -13,6 +13,7 @@
           with py-pkgs; [
             pyopengl
             pygame
+            numpy
           ]))
       ];
     };
@@ -25,6 +26,7 @@
           setuptools
           pyopengl
           pygame
+          numpy
         ];
         pyproject = true;
       };
