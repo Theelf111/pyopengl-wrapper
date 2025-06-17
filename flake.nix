@@ -18,7 +18,7 @@
     };
     packages.${system}.default = with pkgs.python3Packages;
       buildPythonPackage {
-        pname = "pyopengl-wrapper";
+        pname = "pyopenglWrapper";
         version = "0.1";
         src = ./.;
         propagatedBuildInputs = [
