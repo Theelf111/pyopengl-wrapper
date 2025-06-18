@@ -11,6 +11,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 class Window:
+    initialized = False
+    toInit = []
     def __init__(self, size, flags = 0):
         self.flags = flags
         self.resize(size)
@@ -20,6 +22,10 @@ class Window:
 
         gluPerspective(90, (self.width/self.height),0,2)
         glTranslatef(0,0,-1)
+
+        Window.initialized = True
+        for f in Window.toInit:
+            f()
 
     def resize(self, size):
         pygame.display.set_mode(size, OPENGL | DOUBLEBUF | self.flags)
@@ -33,6 +39,9 @@ class Window:
 
 class Texture:
     def __init__(self, arg):
+        if not Window.initialized:
+            Window.toInit.append(lambda: self.__init__(arg))
+            return
         if type(arg) == str:
             image = pygame.image.load(arg).convert()
         elif type(arg) == tuple:
@@ -95,6 +104,9 @@ attributeTypes = {
 
 class Shader:
     def __init__(self, path, mode):
+        if not Window.initialized:
+            Window.toInit.append(lambda: self.__init__(path, mode))
+            return
         self.mode = mode
         self.id = glCreateProgram()
         file = open(path, "r")
