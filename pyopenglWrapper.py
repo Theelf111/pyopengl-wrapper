@@ -166,6 +166,8 @@ class Shader:
         self.uniformTypes = {}
         for i in range(uniformCount):
             name, size, typeNumerator = glGetActiveUniform(self.id, i, 255)
+            if type(name) == np.ndarray:
+                name = bytes(name[:np.where(name == 0)[0][0]])
             self.uniformTypes[name.decode()] = typeNumerator
 
     def use(self):
